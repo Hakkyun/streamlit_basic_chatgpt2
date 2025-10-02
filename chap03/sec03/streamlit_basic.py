@@ -4,28 +4,33 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-api_key = st.secrets["openai"]["api_key"]
+
+# 2) Cloud/로컬 겸용으로 키 읽기 (Secrets > ENV 순)
+api_key = st.secrets.get("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    st.error("API Key가 설정되지 않았습니다. Streamlit Secrets 또는 .env를 확인하세요.")
+    st.stop()
+
+client = OpenAI(api_key=api_key)
 
 st.title("37조 변학균 최지은 챕터8 점심은 뭐먹지 바로 고궁")
 
-# (1) st.session_state에 "messages"가 없으면 초기값을 설정
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "원하는거 말해봐 인간아?"}]
 
-# (2) 대화 기록을 출력
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
-# (3) 사용자 입력을 받아 대화 기록에 추가하고 AI 응답을 생성
 if prompt := st.chat_input():
-    if not api_key:
-        st.info("Please add your OpenAI API key to continue.")
-        st.stop()
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
 
-    client = OpenAI(api_key=api_key)
-    st.session_state.messages.append({"role": "user", "content": prompt}) 
-    st.chat_message("user").write(prompt) 
-    response = client.chat.completions.create(model="gpt-4o", messages=st.session_state.messages) 
+    # 최신 SDK 문법 그대로 사용
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=st.session_state.messages
+    )
     msg = response.choices[0].message.content
-    st.session_state.messages.append({"role": "assistant", "content": msg}) 
+    st.session_state.messages.append({"role": "assistant", "content": msg})
     st.chat_message("assistant").write(msg)
