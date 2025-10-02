@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+openai_api_key = os.getenv('OPENAI_API_KEY') 
 
 st.title("37조 변학균 최지은 챕터8 점심은 뭐먹지 바로 고궁")
 
