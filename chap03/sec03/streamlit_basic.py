@@ -1,8 +1,9 @@
+import os
 import streamlit as st
 from openai import OpenAI
 from dotenv import load_dotenv
-import os
 
+# 1) 로컬 개발 시 .env (없으면 무시)
 load_dotenv()
 
 # 2) Cloud/로컬 겸용으로 키 읽기 (Secrets > ENV 순)
