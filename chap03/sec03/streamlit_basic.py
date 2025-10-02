@@ -5,15 +5,7 @@ import os
 
 load_dotenv()
 
-# (0) 사이드바에서 api_key 입력하는 부분 
-with st.sidebar:
-    openai_api_key = os.getenv('OPENAI_API_KEY') 
-    # openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
-    "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
-    "[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
-    "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
-
-st.title("💬 Chatbot")
+st.title("37조 변학균 최지은 챕터8 점심은 뭐먹지 바로 고궁")
 
 # (1) st.session_state에 "messages"가 없으면 초기값을 설정
 if "messages" not in st.session_state:
