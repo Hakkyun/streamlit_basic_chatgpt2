@@ -10,7 +10,7 @@ st.title("37조 변학균 최지은 챕터8 점심은 뭐먹지 바로 고궁")
 
 # (1) st.session_state에 "messages"가 없으면 초기값을 설정
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+    st.session_state["messages"] = [{"role": "assistant", "content": "원하는거 말해봐 인간아?"}]
 
 # (2) 대화 기록을 출력
 for msg in st.session_state.messages:
